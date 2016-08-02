@@ -1,0 +1,15 @@
+{
+    "name": "jsfilter",
+    "version": "1.0.0",
+    "description": "jsfilter is a jQuery filter plugin on client side",
+    "keywords": [
+        "jsfilter",
+        "html5"
+    ],
+    "author": "Amrish Pal",
+    "license": "MIT",
+    "devDependencies": {
+        "bootstrap-sass": "^3.3.6",
+        "jquery": "^2.2.4"
+    }
+}

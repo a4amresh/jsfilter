@@ -1,0 +1,13 @@
+{
+    "css": [
+        "src/assets/libs/apPlugins/apPagination.css"
+    ],
+    "js": {
+        "main": [
+            "src/assets/libs/projectJs/jsfilter.js"
+        ],
+        "libs": [
+            "src/assets/libs/apPlugins/apPagination.js"
+        ]
+    }
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>js Filter</title>
+    <link rel="stylesheet" href="assets/css/jsfilter.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+</head>
+
+<body>
+    <div class="container" id="myblog">
+        <div class="btn-group btn-group-justified">
+            <span>Categories: </span>
+            <select name="catfilter" class="u2-filter">
+                <option value="">All</option>
+                <option value=".cat-1">Categories - 1</option>
+                <option value=".cat-2">Categories - 2</option>
+                <option value=".cat-3">Categories - 3</option>
+            </select>
+            <span>User: </span>
+            <select name="userfilter" class="u2-filter">
+                <option value="">All</option>
+                <option value=".a">A</option>
+                <option value=".b">B</option>
+                <option value=".c">C</option>
+            </select>
+            <input type="text" placeholder="Search" id="searchInput">
+            <button id="searchBtn">Click</button>
+            <!--<span data-filter="all" class="u2-filter btn btn-info">All</span>
+            <span data-filter=".cat-1" class="u2-filter btn btn-primary">Categories - 1</span>
+            <span data-filter=".cat-2" class="u2-filter btn btn-warning">Categories - 2</span>
+            <span data-filter=".cat-3" class="u2-filter btn btn-primary">Categories - 3</span>-->
+        </div>
+        <div class="row">
+            <div class="u2 col-md-4 cat-1 a">
+                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Categories - 1-a&w=350&h=150" alt="">
+                <div class="content">Cat 1 user a</div>
+            </div>
+            <div class="u2 col-md-4 cat-2 b">
+                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Categories - 2-b&w=350&h=150" alt="">
+                <div class="content">Cat 2 user B</div>
+            </div>
+            <div class="u2 col-md-4 cat-3 c">
+                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Categories - 3-c&w=350&h=150" alt="">
+                <div class="content">cat 3 user c</div>
+            </div>
+            <div class="u2 col-md-4 cat-2 b">
+                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Categories - 2-b&w=350&h=150" alt="">
+                <div class="content">cat 2 user b</div>
+            </div>
+            <div class="u2 col-md-4 cat-1 cat-2 b">
+                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=cat-1 cat-2-b&w=350&h=150" alt="">
+                <div class="content">cat-1 cat-2 user b</div>
+            </div>
+            <div class="u2 col-md-4 cat-3 c">
+                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Categories - 3-c&w=350&h=150" alt="">
+                <div class="content">cat-3 user c</div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/jquery-3.1.0.min.js"></script>
+    <script src="assets/js/jsfilter.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#myblog").jsFilter({
+                selctor: {
+                    targets: '.u2',
+                    filter: '.u2-filter',
+                    search: {
+                        input: '#searchInput',
+                        button: '#searchBtn'
+                    }
+                },
+                controls: {
+                    enable: true,
+                    animation: {
+                        enable: true
+                    },
+                    search: {
+                        enable: true,
+                        onEnter: true
+                    }
+                },
+                load: {
+                    filter: ''
+                },
+                filters: {
+                    logic: '', // Defaul and, or
+                    type: 'select', // Defaul click, select,  what you want fire filter on click or on select
+                    bntLogic: 'toggle' // Default active,  toggle
+                },
+                callbacks: {
+                    filterStart: false,
+                    filterEnd: false,
+                    filterFail: function() {
+                        alert("Not Element on this filter");
+                    }
+                },
+                animation: {
+                    animationIn: 'zoomIn'
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
