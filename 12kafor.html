@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>--Dullu--</title>
+    <style>
+        /*Removeable*/
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            font-size: 16px;
+            background: #f9f9f9;
+        }
+        /*Removeable*/
+        
+        .text-right {
+            text-align: right;
+        }
+        
+        .booking-wrap {
+            width: 100%;
+            float: left;
+        }
+        
+        .booking-person-detail {
+            width: 70%;
+            float: left;
+        }
+        /*Steps*/
+        
+        .step {
+            width: 100%;
+            float: left;
+        }
+        
+        .step-heading {
+            width: 100%;
+            float: left;
+        }
+        
+        .step-number {
+            float: left;
+            padding: 15px 20px;
+            background: #e04f67;
+            border-radius: 50%;
+            color: #fff;
+            box-shadow: 0px 0px 13px -6px #000;
+            margin-right: 14px;
+        }
+        
+        .step-title {
+            float: left;
+            font-size: 1.5em;
+            line-height: normal;
+        }
+        
+        .step-tag {
+            font-size: 0.6em;
+            color: #9c9f9f;
+        }
+        
+        .step-body {
+            width: calc(100% - 24px);
+            float: left;
+            margin: 5px 0px 5px 24px;
+            border-left: 1px solid #999;
+            padding: 10px 10px 20px 39px;
+        }
+        
+        .step-body p {
+            margin-bottom: 2px;
+        }
+        
+        .step-row {
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+        
+        .step-col-6 {
+            width: 50%;
+            float: left;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        
+        .step-col-4 {
+            width: 33.3%;
+            float: left;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        
+        .step-input {
+            width: 100%;
+            padding: 7px 2px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+        
+        .step-input:focus {
+            border: 1px solid #e04f67;
+            outline: none;
+        }
+        /*Side Bar*/
+        
+        .booking-side-bar {
+            width: 30%;
+            float: left;
+        }
+        
+        .summary-wrap {
+            border: 1px solid;
+            width: 100%;
+            float: left;
+            padding: 1px 1px 15px 1px;
+            background: #fff;
+        }
+        
+        .summary-heading {
+            padding: 10px;
+            background: #565a5c;
+            font-size: 1.5em;
+            text-align: center;
+            font-family: inherit;
+            color: #fff;
+        }
+        
+        .summary-body {
+            padding: 10px 20px;
+            width: 100%;
+            float: left;
+        }
+        
+        .summary-row {
+            border-bottom: 1px solid #ddd;
+            width: 100%;
+            float: left;
+            margin-bottom: 5px;
+        }
+        
+        .summary-td {
+            float: left;
+            width: 50%;
+            padding: 5px 0;
+            font-size: 0.9em;
+            color: #777;
+        }
+        
+        .total-cost {
+            font-size: 1.5em;
+            color: #e04f67;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="booking-wrap">
+        <div class="booking-person-detail">
+            <div class="step">
+                <div class="step-heading">
+                    <div class="step-number">1</div>
+                    <div class="step-title">
+                        First Steps Oolala
+                        <div class="step-tag">Go Green</div>
+                    </div>
+                </div>
+                <div class="step-body">
+                    <div class="step-row">
+                        <div class="step-col-4">
+                            <p>Name</p>
+                        </div>
+                        <div class="step-col-4">
+                            <p>Last Name</p>
+                        </div>
+                        <div class="step-col-4">
+                            <p>Your Country</p>
+                        </div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-col-4">
+                            <p>Name</p>
+                        </div>
+                        <div class="step-col-4">
+                            <input type="text" class="step-input">
+                        </div>
+                        <div class="step-col-4">
+                            <input type="text" class="step-input">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- step -->
+            <div class="step">
+                <div class="step-heading">
+                    <div class="step-number">1</div>
+                    <div class="step-title">
+                        First Steps Oolala
+                        <div class="step-tag">Go Green</div>
+                    </div>
+                </div>
+                <div class="step-body">
+                    <div class="step-row">
+                        <div class="step-col-6">
+                            <p>Name</p>
+                            <input type="text" class="step-input">
+                        </div>
+                        <div class="step-col-6">
+                            <p>Last Name</p>
+                            <input type="text" class="step-input">
+                        </div>
+                        <div class="step-col-6">
+                            <p>Your Country</p>
+                            <select name="" id="" class="step-input">
+                                <option value="">Selct your city</option>
+                                <option value="india">India</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- step -->
+        </div>
+        <!--booking-person-detail -->
+        <div class="booking-side-bar">
+            <div class="summary-wrap">
+                <div class="summary-heading">
+                    - Summary -
+                </div>
+                <div class="summary-body">
+                    <div class="summary-row">
+                        <div class="summary-td">
+                            Date
+                        </div>
+                        <div class="summary-td text-right">
+                            10 May 2016
+                        </div>
+                    </div>
+                    <!-- summary-row -->
+                    <div class="summary-row">
+                        <div class="summary-td">
+                            Name
+                        </div>
+                        <div class="summary-td text-right">
+                            Amresh Singh
+                        </div>
+                    </div>
+                    <!-- summary-row -->
+                    <div class="summary-row">
+                        <div class="summary-td">
+                            Date
+                        </div>
+                        <div class="summary-td text-right">
+                            10 May 2016
+                        </div>
+                    </div>
+                    <!-- summary-row -->
+                    <div class="summary-row">
+                        <div class="summary-td total-cost">
+                            Date
+                        </div>
+                        <div class="summary-td text-right total-cost">
+                            2016
+                        </div>
+                    </div>
+                    <!-- summary-row -->
+                </div>
+                <!-- summary-body -->
+            </div>
+        </div>
+        <!-- Side Bar -->
+    </div>
+</body>
+
+</html>
