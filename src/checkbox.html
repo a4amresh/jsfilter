@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>js Filter</title>
+    <link rel="stylesheet" href="assets/css/jsfilter.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+</head>
+
+<body>
+    <div class="container" id="myblog">
+        <div class="btn-group">
+            <input class="u2-filter" type="checkbox" value=".cat-1" id="cat-1">
+            <label for="cat-1">Category 1</label>
+            <input class="u2-filter" type="checkbox" value=".cat-2" id="cat-2">
+            <label for="cat-2">Category 2</label>
+            <input class="u2-filter" type="checkbox" value=".cat-3" id="cat-3">
+            <label for="cat-3">Category 3</label>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default">Sort:: - </button>
+            <button type="button" class="btn btn-primary u2-sort" data-sort="random">Random</button>
+            <button type="button" class="btn btn-warning u2-sort" data-sort="asc">Ascending</button>
+            <button type="button" class="btn btn-info u2-sort" data-sort="desc">Descending</button>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" placeholder="Search" id="searchInput">
+                <button id="searchBtn">Click</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="u2 col-md-4 cat-1 a" data-sort="3">
+                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Categories - 1-a&w=350&h=150" alt="">
+                <div class="content">Cat 1 user a 3</div>
+            </div>
+            <div class="u2 col-md-4 cat-2 b" data-sort="2">
+                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Categories - 2-b&w=350&h=150" alt="">
+                <div class="content">Cat 2 user B 2</div>
+            </div>
+            <div class="u2 col-md-4 cat-3 c" data-sort="1">
+                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Categories - 3-c&w=350&h=150" alt="">
+                <div class="content">cat 3 user c 1</div>
+            </div>
+            <div class="u2 col-md-4 cat-2 b" data-sort="4">
+                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Categories - 2-b&w=350&h=150" alt="">
+                <div class="content">cat 2 user b -4</div>
+            </div>
+            <div class="u2 col-md-4 cat-1 cat-2 b" data-sort="6">
+                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=cat-1 cat-2-b&w=350&h=150" alt="">
+                <div class="content">cat-1 cat-2 user b -6</div>
+            </div>
+            <div class="u2 col-md-4 cat-3 c" data-sort="5">
+                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Categories - 3-c&w=350&h=150" alt="">
+                <div class="content">cat-3 user c 5</div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/jquery-3.1.0.min.js"></script>
+    <script src="assets/js/jsfilter.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#myblog").jsFilter({
+                selctor: {
+                    targets: '.u2',
+                    filter: '.u2-filter',
+                    sorting: '.u2-sort',
+                    search: {
+                        input: '#searchInput',
+                        button: '#searchBtn'
+                    }
+                },
+                controls: {
+                    enable: true,
+                    animation: {
+                        enable: true
+                    },
+                    sorting: {
+                        enable: true
+                    },
+                    search: {
+                        enable: true,
+                        onEnter: true
+                    }
+                },
+                load: {
+                    filter: ''
+                },
+                filters: {
+                    logic: 'and', // Defaul and, or
+                    type: 'checkbox', // Defaul click, select,  what you want fire filter on click or on select
+                    bntLogic: 'toggle' // Default active,  toggle
+                },
+                callbacks: {
+                    filterStart: false,
+                    filterEnd: function(plugin){
+                        console.log(plugin);
+                    },
+                    filterFail: function() {
+                        alert("Not Element on this filter");
+                    }
+                },
+                animation: {
+                    animationIn: 'zoomIn'
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-(function($, window, document, undifined) {
+(function ($, window, document, undifined) {
     "use strict";
     var pluginName = "jsFilter";
     /* Plugin Initialize
@@ -13,20 +13,22 @@
     /* Plugin Prototype function
     -----------------------------------------------*/
     $.extend(Plugin.prototype, {
-        inIt: function() {
+        inIt: function () {
             var self = this;
             self._declaration();
         },
-        _declaration: function() {
+        _declaration: function () {
             var self = this;
             self.$targets = self.options.selctor.targets;
             self.loadFilter = self.options.load.filter;
             self.$filter = self.options.selctor.filter;
+            self.$sort = self.options.selctor.sorting;
             self.controls = self.options.controls.enable;
             self.filterType = self.options.filters.type;
             self.filterLogic = self.options.filters.logic;
             self.BtnLogic = self.options.filters.bntLogic;
             self.searchEnable = self.options.controls.search.enable;
+            self.sortingEnable = self.options.controls.sorting.enable;
             self.$show = null;
             self.$hide = null;
             /* Target Filter Start
@@ -38,9 +40,15 @@
             if (self.controls) {
                 self._filters();
             }
+            if (self.searchEnable) {
+                self._searchClick();
+            }
+            if (self.sortingEnable) {
+                self._sorting();
+            }
 
         },
-        _filtring: function(target, filter) {
+        _filtring: function (target, filter) {
             var self = this;
             /* Filter Start Callback
             ----------------------------*/
@@ -69,11 +77,9 @@
                 self._show(self.$show);
                 self._hide(self.$hide);
             }
-            if (typeof self.options.callbacks.filterEnd === 'function') {
-                self.options.callbacks.filterEnd(self);
-            }
+
         },
-        _show: function(e) {
+        _show: function (e) {
             var self = this;
             e.show();
             if (self.options.controls.animation.enable === true) {
@@ -84,110 +90,104 @@
                     self.options.callbacks.filterFail(self);
                 }
             }
-            setTimeout(function() {
+            setTimeout(function () {
                 $(self.$filter).prop("disabled", false);
                 // Call back filter end
             }, 500);
+            if (typeof self.options.callbacks.filterEnd === 'function') {
+                self.options.callbacks.filterEnd(self);
+            }
         },
-        _hide: function(e) {
+        _hide: function (e) {
             var self = this;
             e.hide();
         },
-        animateCss: function(animationName, elem) {
+        animateCss: function (animationName, elem) {
             var self = this;
             var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-            $(elem).addClass('animated ' + animationName).one(animationEnd, function() {
+            $(elem).addClass('animated ' + animationName).one(animationEnd, function () {
                 $(elem).removeClass('animated ' + animationName);
             });
         },
-        _filters: function() {
+        _filters: function () {
             var self = this;
             switch (self.filterType) {
                 case 'select':
                     self._filterSelect();
+                    break;
+                case 'checkbox':
+                    self._filterCheckbox();
                     break;
                 default:
                     self._filterClick();
                     break;
             };
         },
-        _filterSelect: function() {
+        _filterSelect: function () {
             var self = this;
-            switch (self.BtnLogic) {
-                case 'toggle':
-                    self._buttonToggle();
-                    break;
-                default:
-                    self._buttonActive();
-                    break;
-            };
+            $(self.$filter).unbind().change(function () {
+                var classNames = '';
+                $(self.$filter).each(function () {
+                    classNames += " " + $(this).val();
+                });
+                self._doCheck(classNames);
+            });
         },
-        _filterClick: function() {
+        _filterClick: function () {
             var self = this;
-            $(self.$filter).unbind().click(function() {
+            $(self.$filter).unbind().click(function () {
                 var lodaFilter = $(this).attr("data-filter");
+                //self._doCheck(lodaFilter);
                 self._filtring(self.$targets, lodaFilter);
                 $(self.$filter).prop("disabled", true);
             });
         },
-        _buttonActive: function() {
+        _filterCheckbox: function() {
             var self = this;
-            //console.log("hii Active");
-            $(self.$filter).unbind().change(function() {
-                var lodaFilter = $(this).val();
-                self._filtring(self.$targets, lodaFilter);
-                $(self.$filter).not(this).val('');
-                $(self.$filter).prop("disabled", true);
+            $(self.$filter).unbind().click(function () {
+                var classNames = '';
+                $(self.$filter).each(function () {
+                    if($(this).is(":checked")) {
+                        classNames += " " + $(this).val();
+                    }
+                });
+                self._doCheck(classNames);
             });
         },
-        _buttonToggle: function() {
+        _doCheck: function(classes) {
             var self = this;
-            //console.log("hii toggle");
+            var classNames = classes.split(" ");
+            var removeEmpty = classNames.filter(function (n) {
+                return n.length > 0
+            });
             switch (self.filterLogic) {
                 case 'or':
-                    self._orLogic();
+                    self._orLogic(removeEmpty);
                     break;
                 default:
-                    self._andLogic();
-                    self._searchClick();
+                    self._andLogic(removeEmpty);
                     break;
-            };
+            }
         },
-        _andLogic: function() {
+        _andLogic: function (classes) {
             var self = this;
-            $(self.$filter).unbind().change(function() {
-                var classNames = '';
-                $(self.$filter).each(function() {
-                    classNames += $(this).val();
-                });
-                //console.log(classNames);
-                self._filtring(self.$targets, classNames);
-                $(self.$filter).prop("disabled", true);
-            });
+            var withJoin = classes.join("");
+            self._filtring(self.$targets, withJoin);
+            $(self.$filter).prop("disabled", true);
         },
-        _orLogic: function() {
+        _orLogic: function (classes) {
             var self = this;
-            $(self.$filter).unbind().change(function() {
-                var classNames = [];
-                $(self.$filter).each(function() {
-                    classNames.push($(this).val());
-                });
-                var removeEmpty = classNames.filter(function(n) {
-                    return n.length > 0
-                });
-                var withComma = removeEmpty.join();
-                //console.log(addComma);
-                self._filtring(self.$targets, withComma);
-                $(self.$filter).prop("disabled", true);
-            });
+            var withComma = classes.join();
+            self._filtring(self.$targets, withComma);
+            $(self.$filter).prop("disabled", true);
         },
-        _searchClick: function() {
+        _searchClick: function () {
             var self = this;
-            $(self.options.selctor.search.button).click(function() {
+            $(self.options.selctor.search.button).click(function () {
                 self._searchFunc();
             });
             if (self.options.controls.search.onEnter) {
-                $(self.options.selctor.search.input).keypress(function(e) {
+                $(self.options.selctor.search.input).keypress(function (e) {
                     var code = e.keyCode || e.which;
                     if (code == 13) { //Enter keycode
                         self._searchFunc();
@@ -195,7 +195,7 @@
                 });
             }
         },
-        _searchFunc: function() {
+        _searchFunc: function () {
             var self = this;
             var inputText = $(self.options.selctor.search.input).val().toLowerCase();
             switch (inputText.trim().length) {
@@ -204,7 +204,7 @@
                     break;
                 default:
                     self.$matching = $();
-                    $(self.$targets).each(function() {
+                    $(self.$targets).each(function () {
                         if ($(this).text().toLowerCase().match(inputText)) {
                             self.$matching = self.$matching.add(this);
                         }
@@ -214,13 +214,37 @@
                     $(self.options.selctor.search.input).removeClass("input-empty");
                     break;
             };
+        },
+        _sorting: function() {
+            var self = this;
+            $(self.$sort).unbind().click(function(){
+                self._doSort($(this).data("sort"));
+            })
+        },
+        _doSort: function(dataSort) {
+            var self = this;
+            var targetParent = $(self.$targets).parent();
+            var allTargets = $(self.$targets);
+            var sortable = [];
+            switch(dataSort) {
+                case 'random':
+                    sortable = allTargets.sort(function(a,b){ return 0.5 - Math.random(); });
+                    break;
+                case 'desc':
+                    sortable = allTargets.sort(function(a,b){ return $(b).data("sort") - $(a).data("sort"); });
+                    break;
+                default:
+                    sortable = allTargets.sort(function(a,b){ return $(a).data("sort") - $(b).data("sort"); });
+                    break;
+            }
+            $(targetParent).append(sortable);
         }
 
     });
     /* Function Initialize
     -----------------------------------------------*/
-    $.fn[pluginName] = function(options) {
-        return this.each(function() {
+    $.fn[pluginName] = function (options) {
+        return this.each(function () {
             new Plugin(this, options);
         });
     };
@@ -230,6 +254,7 @@
         selctor: {
             targets: '',
             filter: '',
+            sorting: '',
             search: {
                 input: '',
                 button: ''
@@ -240,6 +265,9 @@
             animation: {
                 enable: true
             },
+            sorting: {
+                enable: false
+            },
             search: {
                 enable: false,
                 onEnter: true
@@ -249,14 +277,14 @@
             filter: ''
         },
         filters: {
-            logic: '', // Defaul and, or
-            type: '', // Defaul click, select,  what you want fire filter on click or on select
-            bntLogic: '' // Default active,  toggle
+            logic: '', // Two Options: (and , or) Defaul:- and
+            type: '', // Three Options: (select , checkbox, click) Defaul:- click  (what you want fire filter on click, on select and checkbox)
+            bntLogic: '' // Two Options: (active , toggle) Defaul:- active (We are not use this right now)
         },
         callbacks: {
-            filterStart: false,
-            filterEnd: false,
-            filterFail: false
+            filterStart: false, // Filter is going to filterd
+            filterEnd: false, // Filter is filter finished
+            filterFail: false // Selected filter not element
         },
         animation: {
             animationIn: 'zoomIn'
